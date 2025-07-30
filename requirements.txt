@@ -1,0 +1,9 @@
+tensorflow==2.16.2
+matplotlib
+numpy
+pandas
+scikit-learn
+seaborn
+pillow
+jupyter
+ipykernel
