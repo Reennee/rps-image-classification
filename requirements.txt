@@ -7,3 +7,6 @@ seaborn
 pillow
 jupyter
 ipykernel
+keras
+fastapi
+uvicorn
