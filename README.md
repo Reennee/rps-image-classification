@@ -226,7 +226,7 @@ We used [Locust](https://locust.io/) to simulate a flood of requests to the `/pr
 
 ### Load Test Results
 
-![Locust Load Test Results]
+![Locust Load Test Results](images/flood%20simulation.png)
 
 *Load testing results showing response times, requests per second, and failure rates*
 
