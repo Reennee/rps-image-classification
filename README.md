@@ -137,19 +137,6 @@ The UI will be available at: http://localhost:8501
 
 ### Option 2: Production Deployment
 
-#### Railway (Recommended)
-1. Install Railway CLI:
-   ```bash
-   npm install -g @railway/cli
-   ```
-
-2. Deploy:
-   ```bash
-   railway login
-   railway init
-   railway up
-   ```
-
 #### Render
 1. Connect your GitHub repository to Render
 2. Render will automatically detect and deploy both services using `render.yaml`

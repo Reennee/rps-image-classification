@@ -54,7 +54,9 @@ with st.form("bulk_upload_form"):
                 files = {"file": (file.name, file.getvalue(), file.type)}
                 data = {"label": class_label}
                 try:
-                    response = requests.post("http://localhost:8000/retrain", files=files, data=data)
+                    # Use environment variable for API URL or default to localhost
+                    api_url = os.getenv('API_URL', 'http://localhost:8000')
+                    response = requests.post(f"{api_url}/retrain", files=files, data=data)
                     if response.status_code == 200:
                         success_count += 1
                     else:
