@@ -1,0 +1,32 @@
+version: '3.8'
+
+services:
+  # Single container setup
+  app-single:
+    build: .
+    ports:
+      - "8000:8000"
+    environment:
+      - PORT=8000
+
+  # Multiple containers setup
+  app-1:
+    build: .
+    ports:
+      - "8001:8000"
+    environment:
+      - PORT=8000
+
+  app-2:
+    build: .
+    ports:
+      - "8002:8000"
+    environment:
+      - PORT=8000
+
+  app-3:
+    build: .
+    ports:
+      - "8003:8000"
+    environment:
+      - PORT=8000 
