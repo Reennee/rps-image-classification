@@ -138,8 +138,8 @@ The UI will be available at: http://localhost:8501
 ### Option 2: Production Deployment
 
 #### Render
-1. Connect your GitHub repository to Render
-2. Render will automatically detect and deploy both services using `render.yaml`
+###### LINK TO PROJECT
+- **LINK** : https://rps-image-cycle.onrender.com
 
 
 ## 📊 API Endpoints
@@ -212,6 +212,23 @@ The model typically achieves:
 - **Accuracy**: 85-95% on test set
 - **Training Time**: ~5-10 minutes (local)
 - **Prediction Time**: <1 second per image
+
+## 🏃 Load Testing with Locust
+
+We used [Locust](https://locust.io/) to simulate a flood of requests to the `/predict` endpoint.
+
+### Test Parameters
+- **Users**: 50 concurrent users
+- **Spawn Rate**: 5 users/second
+- **Endpoint**: `/predict`
+- **Test Duration**: 2 minutes
+- **Image**: Sample rock image from test set
+
+### Load Test Results
+
+![Locust Load Test Results]
+
+*Load testing results showing response times, requests per second, and failure rates*
 
 
 ## 🙏 Acknowledgments
