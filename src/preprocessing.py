@@ -16,7 +16,6 @@ def load_preprocess_data(img_size=(150, 150), batch_size=32):
     # No augmentation for testing
     test_datagen = ImageDataGenerator(rescale=1./255)
 
-    # Get the project root directory (assuming src/ is one level below project root)
     project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
     train_dir = os.path.join(project_root, 'data', 'train')
     test_dir = os.path.join(project_root, 'data', 'test')

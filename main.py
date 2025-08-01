@@ -15,7 +15,7 @@ app = FastAPI(
     version="1.0.0"
 )
 
-# Allow CORS for UI integration
+# CORS for UI integration
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
@@ -23,7 +23,6 @@ app.add_middleware(
     allow_headers=["*"]
 )
 
-# Directory for retraining uploads
 RETRAIN_DIR = "data/retrain_uploads"
 MODEL_PATH = "models/best_model.h5"
 
@@ -31,7 +30,6 @@ os.makedirs(RETRAIN_DIR, exist_ok=True)
 
 @app.post("/predict")
 async def predict(file: UploadFile = File(...)):
-    # Accept image file, save temporarily
     if not file.filename.lower().endswith(('.png', '.jpg', '.jpeg')):
         raise HTTPException(status_code=400, detail="Invalid image format")
     tmp_path = f"temp_{file.filename}"
@@ -56,7 +54,7 @@ async def retrain(
     file: UploadFile = File(...),
     label: str = Form(...)
 ):
-    # Create directory if not exists
+    # Use data/custom directory for new training data
     label_dir = os.path.join("data/custom", label)
     os.makedirs(label_dir, exist_ok=True)
 
@@ -64,8 +62,8 @@ async def retrain(
     with open(file_path, "wb") as buffer:
         shutil.copyfileobj(file.file, buffer)
 
-    # retrain model
-    new_model = retrain_model()
+    # retrain model using the custom directory
+    new_model = retrain_model("data/custom")
     save_model(new_model, MODEL_PATH)
 
     return {"message": f"Model retrained with image: {file.filename}"}

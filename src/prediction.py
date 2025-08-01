@@ -6,7 +6,6 @@ from tensorflow.keras.preprocessing.image import ImageDataGenerator
 from tensorflow.keras.models import load_model as keras_load_model
 from tensorflow.keras.optimizers import Adam
 
-# Class labels (should match the order in your dataset)
 CLASS_NAMES = ['paper', 'rock', 'scissors']
 
 def load_model(model_path='models/best_model.h5'):
@@ -41,41 +40,22 @@ def predict_image(img_path, model_path='models/best_model.h5', target_size=(150,
     confidence = float(np.max(predictions[0]))
     return predicted_class, confidence
 
-def retrain_model(data_dir="data/train", model_path="models/best_model.h5", epochs=3):
-    """
-    Retrain the existing model on new data from a given directory.
-    The directory should have the format: class_name/image.jpg
-    """
-    if not os.path.exists(model_path):
-        raise FileNotFoundError(f"Model not found at {model_path}")
-
-    model = keras_load_model(model_path)
+def retrain_model(new_data_dir, model_path='models/best_model.h5', epochs=2):
+    model = load_model(model_path)
+    # Freeze all layers except the last Dense
+    for layer in model.layers[:-1]:
+        layer.trainable = False
 
     datagen = ImageDataGenerator(rescale=1./255, validation_split=0.2)
-
-    train_data = datagen.flow_from_directory(
-        data_dir,
-        target_size=(150, 150),
-        batch_size=16,
-        class_mode='categorical',
-        subset='training'
+    train_gen = datagen.flow_from_directory(
+        new_data_dir, target_size=(150, 150), batch_size=16, class_mode='categorical', subset='training'
+    )
+    val_gen = datagen.flow_from_directory(
+        new_data_dir, target_size=(150, 150), batch_size=16, class_mode='categorical', subset='validation'
     )
 
-    val_data = datagen.flow_from_directory(
-        data_dir,
-        target_size=(150, 150),
-        batch_size=16,
-        class_mode='categorical',
-        subset='validation'
-    )
-
-    model.compile(
-        optimizer=Adam(),
-        loss='categorical_crossentropy',
-        metrics=['accuracy']
-    )
-
-    model.fit(train_data, validation_data=val_data, epochs=epochs)
-
+    model.compile(optimizer=Adam(), loss='categorical_crossentropy', metrics=['accuracy'])
+    history = model.fit(train_gen, validation_data=val_gen, epochs=epochs)
     model.save(model_path)
+    np.save('models/history.npy', history.history)
     return model
