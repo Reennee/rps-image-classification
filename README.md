@@ -234,6 +234,10 @@ We used [Locust](https://locust.io/) to simulate a flood of requests to the `/pr
 
 We tested the model with different numbers of Docker containers to demonstrate scalability:
 
+![Multi-Container Load Testing](images/flood%20simulation.png)
+
+*Load testing results showing performance across multiple container configurations*
+
 | Containers | Requests/sec | Avg Response Time | 95th Percentile | Failure Rate |
 |------------|-------------|------------------|-----------------|--------------|
 | 1          | 45          | 210ms            | 320ms           | 0%           |

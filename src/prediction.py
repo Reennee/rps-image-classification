@@ -1,6 +1,6 @@
 import tensorflow as tf
 import numpy as np
-from keras.preprocessing import image
+from tensorflow.keras.preprocessing import image
 import os
 from tensorflow.keras.preprocessing.image import ImageDataGenerator
 from tensorflow.keras.models import load_model as keras_load_model
